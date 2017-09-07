@@ -12,8 +12,8 @@ Number,Description,References,Phase,Votes,Comments
 11,"Inconsistent exit code with --files-without-match. Given the exit code of `grep` vs. `grep -v`, I expect similar results when comparing `grep -l` and `grep -L` (`--files-with-matches` / `--files-without-match`) For at least `grep` / `grep -v` / `grep -l` when the "search" is successful, it exits `0` and when the search is unsuccessful it exits `1`.  `grep -L` (`--files-without-match`) does not follow this pattern which I believe to be an oversight / bug.","http://lists.gnu.org/archive/html/bug-grep/2017-08/msg00010.html"
 12,"Bug when using the --color option. When using the --color option of grep, if the final character matching your  grep pattern is on the final column of the terminal, then the character is not  displayed. For example: [cid:image001.png@01D315DB.011830A0]","http://lists.gnu.org/archive/html/bug-grep/2017-08/msg00009.html"
 13,"grep -o fails to count empty lines. the -o option, which is supposed to return only the matching parts of the search, fails: ~$ grep -o ^$ myfile.txt ~$ grep -no ^$ myfile.txt","http://lists.gnu.org/archive/html/bug-grep/2017-08/msg00002.html"
-14,
-15,
+14,"grep: (standard input): invalid argument when run from make. The following Makefile illustrates the issue: $ cat >Makefile <<EOF all: echo "abc" | grep "b" .PHONY: all $ make all # works as expected $ make all > /dev/null grep: (standard input): Invalid argument make: *** [Makefile:2: all] Error 2","http://lists.gnu.org/archive/html/bug-grep/2016-12/msg00036.html"
+15," --with-included-regex vs. e-acute piped into LC_ALL=fr_FR.iso88591 grep '[d-f]'. When grep is configured --with-included-regex, the following command fails to print the expected match: printf '\351\n' |LC_ALL=fr_FR.iso88591 src/grep '[d-f]'","http://lists.gnu.org/archive/html/bug-grep/2016-11/msg00065.html"
 16,
 17,
 18,
