@@ -39,13 +39,3 @@ Number,Description,References,Phase,Votes,Comments
 38,"Severe Bash 4.2 Bug with Arrays, Cannot redirect into an array from multiline variable, Does not work: echo "$mydata" | while read line; do myarray+=( "$line" ); done",  "lists.gnu.org/archive/html/bug-bash/2012-04/msg00157.html"
 39,"Possible bug: Race condition when calling external commands during trap handling. Very infrequently this script will fail with a syntax error in line 5 (echo  $text >> /dev/null). The actual error message is: > /path/to/script.sh: command substitution: line 5: syntax error near  > unexpected token `)'  > /path/to/script.sh: command substitution: line 5: `hostname -s) $1' ", "lists.gnu.org/archive/html/bug-bash/2012-05/msg00002.html"
 40," read() may fail due to nonblocking stdin. If a child process sets stdin to non-blocking and does not set it back to blocking before exiting, other processes may fail to read from stdin.", "lists.gnu.org/archive/html/bug-bash/2017-01/msg00039.html"
-41,
-42,
-43,
-44,
-45,
-46,
-47,
-48,
-49,
-50,

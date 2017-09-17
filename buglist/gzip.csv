@@ -39,13 +39,3 @@ Number,Description,References,Phase,Votes,Comments
 38,"libarchive before 3.2.0 does not limit the number of recursive decompressions, which allows remote attackers to cause a denial of service (memory consumption and application crash) via a crafted gzip file.",MLIST:[oss-security] 20160908 CVE request: libarchive (pre 3.2.0) denial of service with gzip quine   |   URL:http://www.openwall.com/lists/oss-security/2016/09/08/15   |   MLIST:[oss-security] 20160908 Re: CVE request: libarchive (pre 3.2.0) denial of service with gzip quine   |   URL:http://www.openwall.com/lists/oss-security/2016/09/08/18   |   CONFIRM:https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=207362   |   CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=1347086   |   CONFIRM:https://github.com/libarchive/libarchive/commit/6e06b1c89dd0d16f74894eac4cfc1327a06ee4a0   |   CONFIRM:https://github.com/libarchive/libarchive/issues/660   |   CONFIRM:http://www.oracle.com/technetwork/topics/security/linuxbulletinjul2016-3090544.html   |   GENTOO:GLSA-201701-03   |   URL:https://security.gentoo.org/glsa/201701-03   |   REDHAT:RHSA-2016:1844   |   URL:http://rhn.redhat.com/errata/RHSA-2016-1844.html   |   REDHAT:RHSA-2016:1850   |   URL:http://rhn.redhat.com/errata/RHSA-2016-1850.html   |   BID:92901   |   URL:http://www.securityfocus.com/bid/92901,Assigned (20160908),None (candidate not yet proposed),
 39,"Bug: OPTIONs are the same as for 'grep'. case $option in (-[drRzZ] | --di* | --exc* | --inc* | --rec* | --nu*) printf >&2 '%s: %s: option not supported\n' "$0" "$option" exit 2; Both the man page and the help for zgrep say it supports all options that grep does, but it does not support recursion which would be very helpful.","http://lists.gnu.org/archive/html/bug-gzip/2016-12/msg00000.html"
 40,"Bad value of size with --list. The size of the file restored by the option "--list" is incorrect if the file is more big than 4GB. ","http://lists.gnu.org/archive/html/bug-gzip/2016-09/msg00000.html"
-41,
-42,
-43,
-44,
-45,
-46,
-47,
-48,
-49,
-50,
