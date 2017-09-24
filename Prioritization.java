@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.LineNumberReader;
 import java.io.OutputStream;
-;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,6 +38,13 @@ public class Prioritization {
 
             // Load the test cases
             switch (args[0]) {
+                case "AB": 
+                	for (int i = 1; i <= countLines(args[1]); i++) {
+                        Test t = new Test(i);
+                        loadTestGcov(t, args[2] + "test" + i);
+                        tests.add(t);
+                    }
+                    break;
                 case "ASS":
                     List<String> statements = loadSpanningStatements(args[3]);
                     for (int i = 1; i <= countLines(args[1]); i++) {
@@ -55,10 +61,9 @@ public class Prioritization {
                         tests.add(t);
                     }
                     break;
-                
 
                 case "t-W":
-
+                	String line;
                     for (int i = 1; i <= countLines(args[1]); i++) {
                         Test t = new Test(i);
                         tests.add(t);
@@ -67,7 +72,7 @@ public class Prioritization {
 
                     HashMap<HashSet<Integer>, Integer> mapCasaTests = new HashMap<>();
 
-                    in = new BufferedReader(new FileReader(args[2]));
+                    BufferedReader in = new BufferedReader(new FileReader(args[2]));
 
                     ArrayList<Set<Integer>> casaConfs = new ArrayList<>();
                     HashSet<HashSet<Integer>> tsets = new HashSet<>();
@@ -104,7 +109,7 @@ public class Prioritization {
 
                 case "IMD":
 
-                    nTests = countLines(args[1]);
+                    int nTests = countLines(args[1]);
                     for (int n = 1; n <= nTests; n++) {
                         Test t = new Test(n);
                         tests.add(t);
@@ -136,7 +141,6 @@ public class Prioritization {
                         }
                     }
                     break;
-                
                 case "I-TSD":
                     nTests = countLines(args[1]);
                     for (int n = 1; n <= nTests; n++) {
@@ -182,6 +186,10 @@ public class Prioritization {
                     break;
                 case "ASB":
                     prioritizedTests = prioritizeAdditional(tests, "branch");
+                    break;
+                case "t-W":
+                case "I-TSD":
+                    // already prioritized
                     break;
                 case "IMD":
                     prioritizedTests = globalMaxDist(tests, dist, 1);
@@ -250,7 +258,7 @@ public class Prioritization {
                         }
                         lineN++;
                     }
-
+                    in.close();
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -441,7 +449,7 @@ public class Prioritization {
                         }
                         lineN++;
                     }
-
+                    in.close();
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -480,7 +488,7 @@ public class Prioritization {
                         }
                         lineN++;
                     }
-
+                    in.close();
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -757,27 +765,6 @@ public class Prioritization {
         return prioritizedConfs;
     }
 
-    public static void loadTestInputModelMutant(Test t, String file, int i) {
-        try {
-            BufferedReader in = new BufferedReader(new FileReader(new File(file)));
-
-            String line;
-
-            while ((line = in.readLine()) != null) {
-                StringTokenizer st = new StringTokenizer(line, " ");
-                String m = st.nextToken();
-                int test = Integer.parseInt(st.nextToken());
-                if (test == i) {
-                    t.addMutant(m);
-                }
-            }
-            in.close();
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
     public static int compress(String str) throws Exception {
 
         final ByteArrayOutputStream bout = new ByteArrayOutputStream();
@@ -785,6 +772,7 @@ public class Prioritization {
         os.write(str.getBytes());
         os.finish();
         final byte[] compressed = bout.toByteArray();
+        os.close();
         return compressed.length;
     }
 
@@ -899,6 +887,28 @@ public class Prioritization {
             }
         }
         return prioritizedTests;
+    }
+
+    public static int getLevenshteinDistance(String a, String b) {
+        a = a.toLowerCase();
+        b = b.toLowerCase();
+        // i == 0
+        int[] costs = new int[b.length() + 1];
+        for (int j = 0; j < costs.length; j++) {
+            costs[j] = j;
+        }
+        for (int i = 1; i <= a.length(); i++) {
+            // j == 0; nw = lev(i - 1, j)
+            costs[0] = i;
+            int nw = i - 1;
+            for (int j = 1; j <= b.length(); j++) {
+                int cj = Math.min(1 + Math.min(costs[j], costs[j - 1]), a.charAt(i - 1) == b.charAt(j - 1) ? nw : nw + 1);
+                nw = costs[j];
+                costs[j] = cj;
+            }
+        }
+        return costs[b.length()];
+
     }
 
     public static List<Integer> TSDmPrioritization(List<InOut> inouts) throws Exception {
